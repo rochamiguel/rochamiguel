@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página de Testes PHP</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f4f7;
+      }
+
+      main {
+        background: white;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+        width: min(420px, 90vw);
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: 1.45rem;
+        color: #0f172a;
+      }
+
+      label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 4px;
+        color: #0f172a;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #cbd5f5;
+        padding: 10px 12px;
+        font-size: 1rem;
+        color: #0f172a;
+        background: #f8fafc;
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      button {
+        width: 100%;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: 12px;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: filter 200ms;
+      }
+
+      button:disabled {
+        filter: grayscale(0.5);
+        cursor: progress;
+      }
+
+      #response {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #ecfeff;
+        color: #0369a1;
+        border: 1px solid #bae6fd;
+        display: none;
+      }
+
+      #response.error {
+        background: #fee2e2;
+        border-color: #fecaca;
+        color: #b91c1c;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Testa o PHP</h1>
+      <p>Envia uma mensagem de teste e vê a resposta gerada pelo PHP.</p>
+      <form id="test-form">
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" placeholder="Miguel Rocha" required />
+
+        <label for="message">Mensagem</label>
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Escreve algo para o PHP processar"
+          required
+        ></textarea>
+
+        <button type="submit" id="submit-btn">Enviar para o PHP</button>
+      </form>
+      <div id="response"></div>
+    </main>
+
+    <script>
+      const form = document.getElementById('test-form');
+      const responseBox = document.getElementById('response');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        responseBox.style.display = 'none';
+        responseBox.classList.remove('error');
+        submitBtn.disabled = true;
+
+        try {
+          const formData = new FormData(form);
+          const result = await fetch('test.php', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!result.ok) {
+            const errorText = await result.text();
+            throw new Error(errorText || 'Erro ao contactar o PHP');
+          }
+
+          const payload = await result.json();
+          responseBox.textContent = payload.message;
+          responseBox.style.display = 'block';
+        } catch (error) {
+          responseBox.textContent = error.message;
+          responseBox.classList.add('error');
+          responseBox.style.display = 'block';
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
