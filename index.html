@@ -1,1 +1,262 @@
-asda
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rei da Francesinha | O Verdadeiro Molho</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & GERAL --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #1a1a1a; /* Fundo escuro para contraste */
+            overflow-x: hidden;
+        }
+
+        /* --- TIPOGRAFIA "MOLHO DE FRANCESINHA" --- */
+        .sauce-text {
+            font-family: 'Chewy', cursive; /* Fonte com aspeto líquido/arredondado */
+            color: #ff6f00; /* Cor laranja escuro */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            
+            /* O Truque do Molho: Sombras e Brilho */
+            text-shadow: 
+                3px 3px 0px #b33e00, /* Sombra dura para 3D */
+                5px 5px 10px rgba(0,0,0,0.5), /* Sombra suave */
+                inset 2px 2px 10px rgba(255, 255, 255, 0.4); /* Brilho interno */
+            
+            position: relative;
+            z-index: 10;
+        }
+
+        h2.sauce-text {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* --- EFEITO PARALLAX (FRANCESINHA 3D NO FUNDO) --- */
+        .hero-section {
+            height: 100vh; /* Ocupa o ecrã todo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            
+            /* Substitui este URL pela tua imagem real de uma francesinha 3D/Top View */
+            background-image: url('https://images.unsplash.com/photo-1533744698003-8d3a2d42406d?q=80&w=2070&auto=format&fit=crop'); 
+            
+            /* A magia do reveal: A imagem fica fixa enquanto fazes scroll */
+            background-attachment: fixed; 
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            
+            position: relative;
+        }
+
+        /* Camada escura para o texto se ler melhor */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 6rem;
+            line-height: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .cta-button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-family: 'Chewy', cursive;
+            background: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 111, 0, 0.4);
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1) rotate(-2deg);
+            background: #ff8c00;
+        }
+
+        /* --- SECÇÃO DE MENU (O QUE É REVELADO) --- */
+        .menu-reveal {
+            position: relative;
+            background-color: #fffcf5; /* Cor de pão/creme */
+            min-height: 100vh;
+            padding: 80px 20px;
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.5);
+            border-top: 10px solid #ff6f00; /* Borda de molho */
+            border-radius: 30px 30px 0 0; /* Arredondado no topo */
+            margin-top: -50px; /* Sobreposição ligeira */
+            z-index: 5;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-bottom: 4px solid #ff6f00;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item-price {
+            font-size: 1.5rem;
+            color: #ff6f00;
+            font-family: 'Chewy', cursive;
+        }
+
+        .item-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Animação de flutuar para o título */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Efeito de "Gotejar" (CSS Shape) */
+        .drip {
+            position: absolute;
+            top: -45px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ff6f00' fill-opacity='1' d='M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+            z-index: 6;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .main-title { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-section">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1 class="sauce-text main-title">O Templo da<br>Francesinha</h1>
+            <p style="color: white; font-size: 1.2rem; margin-bottom: 20px;">O melhor molho do Norte, direto para o teu prato.</p>
+            <a href="#menu" class="cta-button">Ver Menu</a>
+        </div>
+    </header>
+
+    <section id="menu" class="menu-reveal">
+        <div class="drip"></div>
+
+        <h2 class="sauce-text">As Nossas Bombas</h2>
+        <p style="text-align: center; color: #555; margin-bottom: 50px;">Cuidado: Altamente viciante.</p>
+
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">A Especial</span>
+                    <span class="item-price">12.50€</span>
+                </div>
+                <p class="item-desc">Bife do lombo, linguiça, salsicha fresca, fiambre, queijo gratinado e o nosso molho secreto picante. Acompanha batata.</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Francesinha Top</span>
+                    <span class="item-price">14.00€</span>
+                </div>
+                <p class="item-desc">Versão XL com ovo estrelado no topo e camarão grelhado. Para quem tem coragem.</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">A Vegetariana</span>
+                    <span class="item-price">11.00€</span>
+                </div>
+                <p class="item-desc">Hambúrguer de seitan, cogumelos, legumes grelhados, queijo vegan (opcional) e molho de legumes.</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Pica-Pau</span>
+                    <span class="item-price">9.50€</span>
+                </div>
+                <p class="item-desc">Cubos de carne tenra salteados em azeite e alho, pickles e azeitonas.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: #222; color: white; text-align: center; padding: 30px; margin-top: 50px;">
+        <p>&copy; 2025 O Templo da Francesinha. Feito com muito molho.</p>
+    </footer>
+
+    <script>
+        // Pequeno script para suavizar o scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
