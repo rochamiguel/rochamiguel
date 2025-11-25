@@ -3,6 +3,7 @@ require __DIR__ . '/config.php';
 
 $menuData = readMenuData();
 $daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+$backgroundImage = $menuData['background_image'] !== '' ? $menuData['background_image'] : 'https://i.imgur.com/uRj0p6o.png';
 
 function formatDateLabel(?string $date): ?string
 {
@@ -80,10 +81,10 @@ if ($startLabel !== '' && $endLabel !== '') {
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            
-            /* IMAGEM DA FRANCESINHA FORNECIDA */
-            background-image: url('https://i.imgur.com/uRj0p6o.png'); /* URL da imagem que forneceste */
-            
+
+            /* Imagem configurável da francesinha */
+            background-image: url('<?php echo htmlspecialchars($backgroundImage, ENT_QUOTES, 'UTF-8'); ?>');
+
             background-attachment: fixed; 
             background-position: center bottom; /* Ajustado para a francesinha ficar mais visível */
             background-size: cover;

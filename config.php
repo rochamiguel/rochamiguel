@@ -47,6 +47,7 @@ function readMenuData(): array
     $defaults = [
         'start_date' => '',
         'end_date' => '',
+        'background_image' => '',
         'menu' => [],
     ];
 
@@ -62,6 +63,7 @@ function readMenuData(): array
     }
 
     $data['menu'] = $data['menu'] ?? [];
+    $data['background_image'] = $data['background_image'] ?? '';
 
     return array_merge($defaults, $data);
 }
@@ -71,6 +73,7 @@ function saveMenuData(array $data): void
     $payload = [
         'start_date' => $data['start_date'] ?? '',
         'end_date' => $data['end_date'] ?? '',
+        'background_image' => $data['background_image'] ?? '',
         'menu' => $data['menu'] ?? [],
     ];
 
