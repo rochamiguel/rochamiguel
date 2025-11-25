@@ -1,3 +1,36 @@
+<?php
+require __DIR__ . '/config.php';
+
+$menuData = readMenuData();
+$daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+function formatDateLabel(?string $date): ?string
+{
+    if (!$date) {
+        return null;
+    }
+
+    $dt = DateTime::createFromFormat('Y-m-d', $date);
+    if ($dt instanceof DateTime) {
+        return $dt->format('d/m/Y');
+    }
+
+    return $date;
+}
+
+$startLabel = formatDateLabel($menuData['start_date'] ?? '') ?? '';
+$endLabel = formatDateLabel($menuData['end_date'] ?? '') ?? '';
+
+if ($startLabel !== '' && $endLabel !== '') {
+    $rangeText = $startLabel . ' a ' . $endLabel;
+} elseif ($startLabel !== '') {
+    $rangeText = 'A partir de ' . $startLabel;
+} elseif ($endLabel !== '') {
+    $rangeText = 'Até ' . $endLabel;
+} else {
+    $rangeText = '';
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
@@ -248,37 +281,21 @@
         <p class="menu-intro">Frescos todos os dias, com o sabor inconfundível do Kafé Kina.</p>
 
         <div class="weekly-menu-grid">
+            <?php foreach ($daysOfWeek as $day): 
+                $dish = $menuData['menu'][$day] ?? '';
+                $fallbackDish = $dish !== '' ? $dish : 'Por definir';
+                $isFrancesinha = stripos($fallbackDish, 'francesinha') !== false;
+                $dishClass = $isFrancesinha ? ' sauce-text' : '';
+            ?>
             <div class="weekly-menu-item">
-                <span class="day-of-week">Segunda</span>
-                <span class="dish-name">Costela Assada</span>
+                <span class="day-of-week"><?php echo htmlspecialchars($day, ENT_QUOTES, 'UTF-8'); ?></span>
+                <span class="dish-name<?php echo $dishClass; ?>"><?php echo htmlspecialchars($fallbackDish, ENT_QUOTES, 'UTF-8'); ?></span>
             </div>
-
-            <div class="weekly-menu-item">
-                <span class="day-of-week">Terça</span>
-                <span class="dish-name">Massa à Lavrador</span>
-            </div>
-
-            <div class="weekly-menu-item">
-                <span class="day-of-week">Quarta</span>
-                <span class="dish-name sauce-text" style="font-size: 1.8rem;">Francesinha</span>
-            </div>
-
-            <div class="weekly-menu-item">
-                <span class="day-of-week">Quinta</span>
-                <span class="dish-name">Pernil Assado</span>
-            </div>
-
-            <div class="weekly-menu-item">
-                <span class="day-of-week">Sexta</span>
-                <span class="dish-name">Bacalhau à Liberdade</span>
-            </div>
-
-            <div class="weekly-menu-item">
-                <span class="day-of-week">Sábado</span>
-                <span class="dish-name">Tripas</span>
-            </div>
+            <?php endforeach; ?>
         </div>
-        <p style="text-align: center; margin-top: 40px; color: #555;">(Ementa válida para 24 a 29 de Novembro)</p>
+        <?php if ($rangeText !== ''): ?>
+            <p style="text-align: center; margin-top: 40px; color: #555;">(Ementa válida de <?php echo htmlspecialchars($rangeText, ENT_QUOTES, 'UTF-8'); ?>)</p>
+        <?php endif; ?>
     </section>
 
     <footer>
