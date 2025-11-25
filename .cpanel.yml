@@ -1,0 +1,6 @@
+---
+# Deploy current working tree to the default cPanel document root.
+deployment:
+  tasks:
+    - export DEPLOYPATH="${DEPLOYPATH:-$HOME/public_html}"
+    - rsync -av --exclude='.git*' --exclude='.env' --exclude='menu.json' --exclude='.cpanel.yml' ./ "$DEPLOYPATH"/
