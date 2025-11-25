@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafé Kina | A Melhor Francesinha de Olival</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & GERAL --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        /* --- TIPOGRAFIA "MOLHO KINA" --- */
+        .sauce-text {
+            font-family: 'Chewy', cursive;
+            color: #ff6f00; /* Laranja Molho */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            
+            /* Efeito 3D Líquido */
+            text-shadow: 
+                4px 4px 0px #b33e00,
+                6px 6px 15px rgba(0,0,0,0.6),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5);
+            
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- EFEITO PARALLAX (FRANCESINHA NO FUNDO) --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            
+            /* Imagem representativa de Francesinha de topo */
+            background-image: url('https://images.unsplash.com/photo-1533744698003-8d3a2d42406d?q=80&w=2070&auto=format&fit=crop'); 
+            
+            /* EFEITO PARALLAX FIXO */
+            background-attachment: fixed; 
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            
+            position: relative;
+        }
+
+        /* Overlay escuro para destacar o nome Kina */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .main-title {
+            font-size: 7rem;
+            line-height: 0.9;
+            margin-bottom: 10px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .sub-title {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .badge {
+            background: #d32f2f;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .cta-button {
+            padding: 15px 50px;
+            font-size: 1.6rem;
+            font-family: 'Chewy', cursive;
+            background: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #b33e00, 0 10px 20px rgba(0,0,0,0.4);
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #b33e00, 0 5px 10px rgba(0,0,0,0.4);
+            background: #ff8c00;
+        }
+
+        /* --- SECÇÃO DE MENU (REVEAL) --- */
+        .menu-reveal {
+            position: relative;
+            background-color: #fffcf5;
+            min-height: 100vh;
+            padding: 100px 20px 50px;
+            box-shadow: 0 -30px 60px rgba(0,0,0,0.7);
+            border-top: 12px solid #ff6f00;
+            border-radius: 40px 40px 0 0;
+            margin-top: -60px; /* Efeito de sobreposição */
+            z-index: 5;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .menu-intro {
+            text-align: center;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            font-style: italic;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #ff6f00;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 111, 0, 0.15);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #222;
+            width: 70%;
+        }
+
+        .item-price {
+            font-size: 1.6rem;
+            color: #d32f2f;
+            font-family: 'Chewy', cursive;
+        }
+
+        .item-desc {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Destaque para a Francesinha */
+        .highlight-item {
+            border: 2px solid #ff6f00;
+            background: #fff5e6;
+        }
+        
+        .star-icon {
+            color: #ffca28;
+            margin-right: 5px;
+        }
+
+        /* Efeito de Gotejar SVG */
+        .drip {
+            position: absolute;
+            top: -45px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ff6f00' fill-opacity='1' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+            z-index: 6;
+            pointer-events: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: #bbb;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: auto;
+            border-top: 5px solid #d32f2f;
+        }
+        
+        footer strong { color: white; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .main-title { font-size: 4.5rem; }
+            .section-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-section">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <div class="badge">Desde sempre em Olival</div>
+            <h1 class="sauce-text main-title">Kafé Kina</h1>
+            <p class="sub-title">O verdadeiro molho, a mesma receita.</p>
+            <a href="#menu" class="cta-button">Ver o Menu</a>
+        </div>
+    </header>
+
+    <section id="menu" class="menu-reveal">
+        <div class="drip"></div>
+
+        <h2 class="sauce-text section-title">Clássicos do Kina</h2>
+        <p class="menu-intro">Conhecido pela "Melhor Francesinha da Região", mas com mão cheia para a cozinha tradicional portuguesa.</p>
+
+        <div class="menu-grid">
+            <div class="menu-item highlight-item">
+                <div class="item-header">
+                    <span class="item-name"><span class="star-icon">★</span> A Francesinha</span>
+                    <span class="item-price">10.00€</span>
+                </div>
+                <p class="item-desc">A lenda da casa. Molho picante e aveludado, ingredientes frescos e batata caseira. "Quem prova, volta sempre."</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Cachorro Especial</span>
+                    <span class="item-price">7.50€</span>
+                </div>
+                <p class="item-desc">O nosso cachorro em prato, regado com o famoso molho de francesinha e gratinado com queijo.</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Bacalhau à Liberdade</span>
+                    <span class="item-price">12.00€</span>
+                </div>
+                <p class="item-desc">Uma das nossas especialidades de tacho. Bacalhau suculento preparado à moda antiga.</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Tripas à "Manel"</span>
+                    <span class="item-price">9.50€</span>
+                </div>
+                <p class="item-desc">A tradição do Porto servida com o toque caseiro do Kina. Sabor intenso e reconfortante.</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Vitela Assada</span>
+                    <span class="item-price">11.50€</span>
+                </div>
+                <p class="item-desc">Vitela tenra assada lentamente no forno, acompanhada com arroz e batata assada.</p>
+            </div>
+             
+             <div class="menu-item">
+                <div class="item-header">
+                    <span class="item-name">Massa à Lavrador</span>
+                    <span class="item-price">9.00€</span>
+                </div>
+                <p class="item-desc">Prato robusto para quem precisa de energia. Carnes variadas e massa cozinhada no ponto.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>Kafé Kina</strong> | Rua Central do Olival 4162, Vila Nova de Gaia</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">Tel: 22 765 2522 | Aberto todos os dias (exceto Domingo)</p>
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.5;">Design gerado por IA • Sabores Reais</p>
+    </footer>
+
+    <script>
+        // Scroll Suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
