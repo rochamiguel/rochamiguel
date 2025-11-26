@@ -66,6 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backoffice | Kafé Kina</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Rubik', Arial, sans-serif;
             background: radial-gradient(circle at 20% 20%, #1c1c1c, #0f0f0f);
