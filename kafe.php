@@ -100,7 +100,7 @@ if ($startLabel !== '' && $endLabel !== '') {
             justify-content: center;
             flex-direction: column;
             background-image: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.85)), url('<?php echo htmlspecialchars($backgroundImage, ENT_QUOTES, 'UTF-8'); ?>');
-            background-attachment: fixed;
+            background-attachment: scroll; /* scroll para suavizar a performance */
             background-position: center bottom;
             background-size: cover;
             background-repeat: no-repeat;
