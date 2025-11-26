@@ -386,14 +386,14 @@ if ($startLabel !== '' && $endLabel !== '') {
 
     <header class="hero-section">
         <div class="hero-content">
-            <div class="badge">Olival • Molho que vicia</div>
+            <div class="badge">Casa da Francesinha</div>
             <h1 class="sauce-text main-title">Kafé Kina</h1>
-            <p class="sub-title">A melhor francesinha de Olival. Pão tostadinho, tacho a fumegar, molho que abraça.</p>
+            <p class="sub-title">A francesinha que faz Olival sorrir.</p>
             <div class="hero-badges">
-                <span class="floating-badge">Molho que vicia</span>
-                <span class="floating-badge">Francesinha em pão bijou</span>
-                <span class="floating-badge">Bife no ponto certo</span>
-                <span class="floating-badge">Batata a mergulhar no molho</span>
+                <span class="floating-badge">Casa da Francesinha</span>
+                <span class="floating-badge">Molho da Casa</span>
+                <span class="floating-badge">Conforto em forma de francesinha</span>
+                <span class="floating-badge">Simples, honesto, delicioso</span>
             </div>
             <a href="#ementa-semanal" class="cta-button">Passar à ementa</a>
         </div>
@@ -404,12 +404,12 @@ if ($startLabel !== '' && $endLabel !== '') {
 
         <div class="menu-head" style="text-align: center; position: relative; z-index: 1;">
             <h2 class="sauce-text section-title">Ementa da Semana</h2>
-            <p class="menu-intro">Molho a borbulhar, francesinha a chegar à mesa. Junta-te à mesa do Kafé Kina.</p>
+            <p class="menu-intro">A melhor francesinha da região. Molho da Casa, pão estaladiço e uma mesa que sabe sempre bem.</p>
             <div class="menu-highlight">
-                <span>Molho que se come à colher</span>
-                <span>Pão bijou estaladiço</span>
-                <span>Bife no ponto certo</span>
-                <span>Batata a nadar no molho</span>
+                <span>Casa da Francesinha</span>
+                <span>Molho da Casa</span>
+                <span>Conforto em forma de francesinha</span>
+                <span>Simples, honesto, delicioso</span>
             </div>
             <?php if ($rangeText !== ''): ?>
                 <div style="margin-bottom: 30px;">
