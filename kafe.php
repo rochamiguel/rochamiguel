@@ -268,9 +268,9 @@ if ($startLabel !== '' && $endLabel !== '') {
     <header class="hero-section">
         <div class="overlay"></div>
         <div class="hero-content">
-            <div class="badge">Desde sempre em Olival</div>
+            <!-- <div class="badge">Desde sempre em Olival</div> -->
             <h1 class="sauce-text main-title">Kafé Kina</h1>
-            <p class="sub-title">A lenda da Francesinha, o sabor da tradição.</p>
+            <!-- <p class="sub-title">A lenda da Francesinha, o sabor da tradição.</p> -->
             <a href="#ementa-semanal" class="cta-button">Ver Ementa Semanal</a>
         </div>
     </header>
@@ -279,7 +279,6 @@ if ($startLabel !== '' && $endLabel !== '') {
         <div class="drip"></div>
 
         <h2 class="sauce-text section-title">A Nossa Ementa da Semana</h2>
-        <p class="menu-intro">Frescos todos os dias, com o sabor inconfundível do Kafé Kina.</p>
 
         <div class="weekly-menu-grid">
             <?php foreach ($daysOfWeek as $day): 
@@ -301,8 +300,7 @@ if ($startLabel !== '' && $endLabel !== '') {
 
     <footer>
         <p><strong>Kafé Kina</strong> | Rua Central do Olival 4162, Vila Nova de Gaia</p>
-        <p style="margin-top: 10px; font-size: 0.9rem;">Tel: 965 565 9041 | Aberto todos os dias (exceto Domingo)</p>
-        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.5;">Design gerado por IA • Sabores Reais</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">Tel: 965 659 041 | Aberto todos os dias (exceto Domingo)</p>
     </footer>
 
     <script>
