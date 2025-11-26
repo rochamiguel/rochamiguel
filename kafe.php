@@ -4,6 +4,12 @@ require __DIR__ . '/config.php';
 $menuData = readMenuData();
 $daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 $backgroundImage = $menuData['background_image'] !== '' ? $menuData['background_image'] : 'https://i.imgur.com/uRj0p6o.png';
+$theme = $menuData['theme'] ?? [];
+$typography = $menuData['typography'] ?? [];
+$texts = $menuData['texts'] ?? [];
+$heroTags = $menuData['hero_tags'] ?? [];
+$highlights = $menuData['highlights'] ?? [];
+$notes = $menuData['notes'] ?? [];
 
 function formatDateLabel(?string $date): ?string
 {
@@ -45,13 +51,17 @@ if ($startLabel !== '' && $endLabel !== '') {
 
     <style>
         :root {
-            --bg-dark: #0f0c0a;
+            --bg-dark: <?php echo json_encode($theme['bg_dark'] ?? '#0f0c0a'); ?>;
             --bg-panel: #18120f;
-            --accent: #ff6f00;
-            --accent-2: #ffb057;
-            --cream: #fff7ec;
-            --ink: #0a0a0a;
+            --accent: <?php echo json_encode($theme['accent'] ?? '#ff6f00'); ?>;
+            --accent-2: <?php echo json_encode($theme['accent2'] ?? '#ffb057'); ?>;
+            --cream: <?php echo json_encode($theme['cream'] ?? '#fff7ec'); ?>;
+            --ink: <?php echo json_encode($theme['ink'] ?? '#0a0a0a'); ?>;
             --shadow: rgba(0, 0, 0, 0.4);
+            --body-font: <?php echo json_encode($typography['body_font'] ?? 'Rubik, sans-serif'); ?>;
+            --title-font: <?php echo json_encode($typography['title_font'] ?? 'Chewy, cursive'); ?>;
+            --base-size: <?php echo json_encode($typography['base_size'] ?? '16px'); ?>;
+            --title-size: <?php echo json_encode($typography['title_size'] ?? 'clamp(3.8rem, 8vw, 7rem)'); ?>;
         }
 
         * {
@@ -61,7 +71,8 @@ if ($startLabel !== '' && $endLabel !== '') {
         }
 
         body {
-            font-family: 'Rubik', sans-serif;
+            font-family: var(--body-font);
+            font-size: var(--base-size);
             background: radial-gradient(circle at 20% 20%, #1c120d, var(--bg-dark));
             color: #fdfdfd;
             overflow-x: hidden;
@@ -69,7 +80,7 @@ if ($startLabel !== '' && $endLabel !== '') {
 
         /* --- TIPOGRAFIA "MOLHO KINA" --- */
         .sauce-text {
-            font-family: 'Chewy', cursive;
+            font-family: var(--title-font);
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -147,7 +158,7 @@ if ($startLabel !== '' && $endLabel !== '') {
         }
 
         .main-title {
-            font-size: clamp(3.8rem, 8vw, 7rem);
+            font-size: var(--title-size);
             line-height: 0.9;
             margin: 14px 0 12px 0;
             animation: pulse 3s ease-in-out infinite;
@@ -300,7 +311,7 @@ if ($startLabel !== '' && $endLabel !== '') {
             position: absolute;
             top: 16px;
             right: 18px;
-            font-family: 'Chewy', cursive;
+            font-family: var(--title-font);
             color: rgba(0,0,0,0.1);
             font-size: 1.5rem;
         }
@@ -321,7 +332,7 @@ if ($startLabel !== '' && $endLabel !== '') {
 
         .dish-name {
             font-size: 1.3rem;
-            font-family: 'Chewy', cursive;
+            font-family: var(--title-font);
             color: #2c1a0d;
             line-height: 1.25;
             min-height: 40px;
@@ -338,6 +349,34 @@ if ($startLabel !== '' && $endLabel !== '') {
             border: 1px solid #ffd9b3;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 18px rgba(0,0,0,0.05);
             font-weight: 800;
+        }
+
+        .notes-panel {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 50px auto 0;
+            background: #fff;
+            border-radius: 18px;
+            padding: 22px;
+            border: 2px solid #f4d7b6;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .notes-panel h3 {
+            margin: 0 0 12px;
+            font-family: var(--title-font);
+            color: var(--accent);
+        }
+
+        .note-item {
+            padding: 10px 12px;
+            background: #fff3e5;
+            border-radius: 10px;
+            border: 1px solid #ffd9b3;
+            color: #3a2818;
+            font-weight: 700;
+            margin-top: 8px;
         }
 
         .drip {
@@ -386,16 +425,21 @@ if ($startLabel !== '' && $endLabel !== '') {
 
     <header class="hero-section">
         <div class="hero-content">
-            <div class="badge">Casa da Francesinha</div>
-            <h1 class="sauce-text main-title">Kafé Kina</h1>
-            <p class="sub-title">A francesinha que faz Olival sorrir.</p>
-            <div class="hero-badges">
-                <span class="floating-badge">Casa da Francesinha</span>
-                <span class="floating-badge">Molho da Casa</span>
-                <span class="floating-badge">Conforto em forma de francesinha</span>
-                <span class="floating-badge">Simples, honesto, delicioso</span>
-            </div>
-            <a href="#ementa-semanal" class="cta-button">Passar à ementa</a>
+            <?php if (!empty($texts['hero_badge'])): ?>
+                <div class="badge"><?php echo htmlspecialchars($texts['hero_badge'], ENT_QUOTES, 'UTF-8'); ?></div>
+            <?php endif; ?>
+            <h1 class="sauce-text main-title"><?php echo htmlspecialchars($texts['hero_title'] ?? 'Kafé Kina', ENT_QUOTES, 'UTF-8'); ?></h1>
+            <?php if (!empty($texts['hero_subtitle'])): ?>
+                <p class="sub-title"><?php echo htmlspecialchars($texts['hero_subtitle'], ENT_QUOTES, 'UTF-8'); ?></p>
+            <?php endif; ?>
+            <?php if (!empty($heroTags)): ?>
+                <div class="hero-badges">
+                    <?php foreach ($heroTags as $tag): ?>
+                        <span class="floating-badge"><?php echo htmlspecialchars($tag, ENT_QUOTES, 'UTF-8'); ?></span>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            <a href="#ementa-semanal" class="cta-button"><?php echo htmlspecialchars($texts['cta_label'] ?? 'Ver ementa', ENT_QUOTES, 'UTF-8'); ?></a>
         </div>
     </header>
 
@@ -403,18 +447,24 @@ if ($startLabel !== '' && $endLabel !== '') {
         <div class="drip"></div>
 
         <div class="menu-head" style="text-align: center; position: relative; z-index: 1;">
-            <h2 class="sauce-text section-title">Ementa da Semana</h2>
-            <p class="menu-intro">A melhor francesinha da região. Molho da Casa, pão estaladiço e uma mesa que sabe sempre bem.</p>
-            <div class="menu-highlight">
-                <span>Casa da Francesinha</span>
-                <span>Molho da Casa</span>
-                <span>Conforto em forma de francesinha</span>
-                <span>Simples, honesto, delicioso</span>
-            </div>
+            <h2 class="sauce-text section-title"><?php echo htmlspecialchars($texts['menu_title'] ?? 'Ementa da Semana', ENT_QUOTES, 'UTF-8'); ?></h2>
+            <?php if (!empty($texts['menu_intro'])): ?>
+                <p class="menu-intro"><?php echo htmlspecialchars($texts['menu_intro'], ENT_QUOTES, 'UTF-8'); ?></p>
+            <?php endif; ?>
+            <?php if (!empty($highlights)): ?>
+                <div class="menu-highlight">
+                    <?php foreach ($highlights as $item): ?>
+                        <span><?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?></span>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
             <?php if ($rangeText !== ''): ?>
                 <div style="margin-bottom: 30px;">
                     <span class="date-pill">Semana: <?php echo htmlspecialchars($rangeText, ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
+            <?php endif; ?>
+            <?php if (!empty($texts['schedule'])): ?>
+                <p class="menu-intro" style="margin-top: -20px; font-style: normal; color: #4a2a10;"><?php echo htmlspecialchars($texts['schedule'], ENT_QUOTES, 'UTF-8'); ?></p>
             <?php endif; ?>
         </div>
 
@@ -431,11 +481,25 @@ if ($startLabel !== '' && $endLabel !== '') {
             </div>
             <?php endforeach; ?>
         </div>
+        <?php if (!empty($notes)): ?>
+            <div class="notes-panel">
+                <?php if (!empty($texts['notes_title'])): ?>
+                    <h3><?php echo htmlspecialchars($texts['notes_title'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                <?php endif; ?>
+                <?php foreach ($notes as $note): ?>
+                    <div class="note-item"><?php echo htmlspecialchars($note, ENT_QUOTES, 'UTF-8'); ?></div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </section>
 
     <footer>
-        <p><strong>Kafé Kina</strong> | Rua Central do Olival 4162, Vila Nova de Gaia</p>
-        <p style="margin-top: 10px; font-size: 0.9rem;">Tel: 965 659 041 | Aberto todos os dias (exceto Domingo)</p>
+        <?php if (!empty($texts['footer_line1'])): ?>
+            <p><strong><?php echo htmlspecialchars($texts['footer_line1'], ENT_QUOTES, 'UTF-8'); ?></strong></p>
+        <?php endif; ?>
+        <?php if (!empty($texts['footer_line2'])): ?>
+            <p style="margin-top: 10px; font-size: 0.9rem;"><?php echo htmlspecialchars($texts['footer_line2'], ENT_QUOTES, 'UTF-8'); ?></p>
+        <?php endif; ?>
     </footer>
 
     <script>
