@@ -44,7 +44,16 @@ if ($startLabel !== '' && $endLabel !== '') {
     <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & GERAL --- */
+        :root {
+            --bg-dark: #0f0c0a;
+            --bg-panel: #18120f;
+            --accent: #ff6f00;
+            --accent-2: #ffb057;
+            --cream: #fff7ec;
+            --ink: #0a0a0a;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -53,174 +62,282 @@ if ($startLabel !== '' && $endLabel !== '') {
 
         body {
             font-family: 'Rubik', sans-serif;
-            background-color: #1a1a1a;
+            background: radial-gradient(circle at 20% 20%, #1c120d, var(--bg-dark));
+            color: #fdfdfd;
             overflow-x: hidden;
         }
 
         /* --- TIPOGRAFIA "MOLHO KINA" --- */
         .sauce-text {
             font-family: 'Chewy', cursive;
-            color: #ff6f00; /* Laranja Molho */
+            color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 2px;
-            
-            /* Efeito 3D Líquido */
-            text-shadow: 
+            text-shadow:
                 4px 4px 0px #b33e00,
                 6px 6px 15px rgba(0,0,0,0.6),
                 inset 2px 2px 5px rgba(255, 255, 255, 0.5);
-            
             position: relative;
             z-index: 10;
         }
 
-        /* --- EFEITO PARALLAX (FRANCESINHA NO FUNDO) --- */
+        /* --- HERO --- */
         .hero-section {
-            height: 100vh;
+            min-height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-
-            /* Imagem configurável da francesinha */
-            background-image: url('<?php echo htmlspecialchars($backgroundImage, ENT_QUOTES, 'UTF-8'); ?>');
-
-            background-attachment: fixed; 
-            background-position: center bottom; /* Ajustado para a francesinha ficar mais visível */
+            background-image: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.85)), url('<?php echo htmlspecialchars($backgroundImage, ENT_QUOTES, 'UTF-8'); ?>');
+            background-attachment: fixed;
+            background-position: center bottom;
             background-size: cover;
             background-repeat: no-repeat;
-            
             position: relative;
+            padding: 80px 24px 100px;
+            overflow: hidden;
         }
 
-        /* Overlay escuro para destacar o nome Kina */
-        .overlay {
+        .hero-section::before, .hero-section::after {
+            content: "";
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .hero-section::before {
+            background: var(--accent);
+            top: -120px;
+            left: -120px;
+        }
+
+        .hero-section::after {
+            background: #ff2d55;
+            bottom: -160px;
+            right: -80px;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
             text-align: center;
-            padding: 20px;
-        }
-
-        .main-title {
-            font-size: 7rem;
-            line-height: 0.9;
-            margin-bottom: 10px;
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        .sub-title {
-            color: #fff;
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            padding: 24px;
+            max-width: 960px;
+            width: 100%;
+            backdrop-filter: blur(6px);
         }
 
         .badge {
-            background: #d32f2f;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.5);
+            color: #ffe7cf;
+            padding: 7px 18px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            letter-spacing: 0.4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .main-title {
+            font-size: clamp(3.8rem, 8vw, 7rem);
+            line-height: 0.9;
+            margin: 14px 0 12px 0;
+            animation: pulse 3s ease-in-out infinite;
+            text-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        .sub-title {
+            color: #ffe6cd;
+            font-size: 1.4rem;
+            margin-bottom: 22px;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 10px 0 26px 0;
+        }
+
+        .floating-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 10px 18px;
+            border-radius: 12px;
+            color: #ffe7cf;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+            backdrop-filter: blur(6px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .floating-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.45);
         }
 
         .cta-button {
-            padding: 15px 50px;
-            font-size: 1.6rem;
-            font-family: 'Chewy', cursive;
-            background: #ff6f00;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, var(--accent), #ff8727);
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 14px;
             cursor: pointer;
-            box-shadow: 0 5px 0 #b33e00, 0 10px 20px rgba(0,0,0,0.4);
-            transition: all 0.2s;
+            box-shadow: 0 10px 24px rgba(255, 111, 0, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .cta-button:hover {
-            transform: translateY(4px);
-            box-shadow: 0 1px 0 #b33e00, 0 5px 10px rgba(0,0,0,0.4);
-            background: #ff8c00;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px rgba(255, 111, 0, 0.45);
         }
 
         /* --- SECÇÃO DE EMENTA SEMANAL --- */
         .menu-reveal {
             position: relative;
-            background-color: #fffcf5;
+            background: radial-gradient(circle at 20% 20%, #fff3e0, var(--cream));
             min-height: 100vh;
-            padding: 100px 20px 50px;
+            padding: 120px 20px 70px;
             box-shadow: 0 -30px 60px rgba(0,0,0,0.7);
-            border-top: 12px solid #ff6f00;
-            border-radius: 40px 40px 0 0;
-            margin-top: -60px; /* Efeito de sobreposição */
+            border-top: 14px solid var(--accent);
+            border-radius: 36px 36px 0 0;
+            margin-top: -60px;
             z-index: 5;
         }
 
+        .menu-reveal::before {
+            content: "";
+            position: absolute;
+            inset: 40px 30px;
+            background: repeating-linear-gradient(
+                -45deg,
+                rgba(255, 111, 0, 0.05),
+                rgba(255, 111, 0, 0.05) 12px,
+                transparent 12px,
+                transparent 24px
+            );
+            border-radius: 28px;
+            z-index: 0;
+        }
+
         .section-title {
-            font-size: 3.5rem;
+            font-size: clamp(2.6rem, 6vw, 3.8rem);
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            color: var(--ink);
         }
 
         .menu-intro {
             text-align: center;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 60px;
+            color: #6a5038;
+            max-width: 720px;
+            margin: 0 auto 36px;
             font-style: italic;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .menu-highlight {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px auto 50px;
+        }
+
+        .menu-highlight span {
+            background: #ffe2c2;
+            color: #4a2a10;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 10px 18px rgba(0,0,0,0.06);
         }
 
         .weekly-menu-grid {
+            position: relative;
+            z-index: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adaptado para 6 dias */
-            gap: 25px;
-            max-width: 900px; /* Mais compacto */
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .weekly-menu-item {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease-in-out;
-            text-align: center;
-            border-bottom: 4px solid #d32f2f;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            background: #fff;
+            border-radius: 18px;
+            padding: 22px 20px 24px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border: 2px solid #f4d7b6;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+            text-align: left;
+            position: relative;
+        }
+
+        .weekly-menu-item::after {
+            content: "Kina";
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            font-family: 'Chewy', cursive;
+            color: rgba(0,0,0,0.1);
+            font-size: 1.5rem;
         }
 
         .weekly-menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(255, 111, 0, 0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 35px rgba(255, 111, 0, 0.18);
         }
 
         .day-of-week {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #ff6f00;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent);
             margin-bottom: 8px;
             text-transform: uppercase;
+            letter-spacing: 0.4px;
         }
 
         .dish-name {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             font-family: 'Chewy', cursive;
-            color: #222;
-            line-height: 1.2;
+            color: #2c1a0d;
+            line-height: 1.25;
+            min-height: 40px;
+        }
+
+        .date-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffefe0;
+            color: #4a2a10;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid #ffd9b3;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 18px rgba(0,0,0,0.05);
+            font-weight: 800;
         }
 
         .drip {
@@ -237,17 +354,18 @@ if ($startLabel !== '' && $endLabel !== '') {
             pointer-events: none;
         }
 
-        /* Footer */
         footer {
-            background: #222;
-            color: #bbb;
+            background: #0c0a08;
+            color: #d9c8b6;
             text-align: center;
-            padding: 40px 20px;
+            padding: 46px 20px 52px;
             margin-top: auto;
-            border-top: 5px solid #d32f2f;
+            border-top: 5px solid var(--accent);
+            position: relative;
+            z-index: 2;
         }
-        
-        footer strong { color: white; }
+
+        footer strong { color: #fff; }
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -257,31 +375,51 @@ if ($startLabel !== '' && $endLabel !== '') {
 
         /* Responsivo */
         @media (max-width: 768px) {
-            .main-title { font-size: 4.5rem; }
-            .section-title { font-size: 2.5rem; }
-            .weekly-menu-grid { grid-template-columns: 1fr; } /* Uma coluna em mobile */
+            .main-title { font-size: 3.8rem; }
+            .section-title { font-size: 2.4rem; }
+            .weekly-menu-grid { grid-template-columns: 1fr; }
+            .hero-section { background-attachment: scroll; }
         }
     </style>
 </head>
 <body>
 
     <header class="hero-section">
-        <div class="overlay"></div>
         <div class="hero-content">
-            <!-- <div class="badge">Desde sempre em Olival</div> -->
+            <div class="badge">Olival • Molho que vicia</div>
             <h1 class="sauce-text main-title">Kafé Kina</h1>
-            <!-- <p class="sub-title">A lenda da Francesinha, o sabor da tradição.</p> -->
-            <a href="#ementa-semanal" class="cta-button">Ver Ementa Semanal</a>
+            <p class="sub-title">A melhor francesinha de Olival. Pão tostadinho, tacho a fumegar, molho que abraça.</p>
+            <div class="hero-badges">
+                <span class="floating-badge">Molho que vicia</span>
+                <span class="floating-badge">Francesinha em pão bijou</span>
+                <span class="floating-badge">Bife no ponto certo</span>
+                <span class="floating-badge">Batata a mergulhar no molho</span>
+            </div>
+            <a href="#ementa-semanal" class="cta-button">Passar à ementa</a>
         </div>
     </header>
 
     <section id="ementa-semanal" class="menu-reveal">
         <div class="drip"></div>
 
-        <h2 class="sauce-text section-title">A Nossa Ementa da Semana</h2>
+        <div class="menu-head" style="text-align: center; position: relative; z-index: 1;">
+            <h2 class="sauce-text section-title">Ementa da Semana</h2>
+            <p class="menu-intro">Molho a borbulhar, francesinha a chegar à mesa. Junta-te à mesa do Kafé Kina.</p>
+            <div class="menu-highlight">
+                <span>Molho que se come à colher</span>
+                <span>Pão bijou estaladiço</span>
+                <span>Bife no ponto certo</span>
+                <span>Batata a nadar no molho</span>
+            </div>
+            <?php if ($rangeText !== ''): ?>
+                <div style="margin-bottom: 30px;">
+                    <span class="date-pill">Semana: <?php echo htmlspecialchars($rangeText, ENT_QUOTES, 'UTF-8'); ?></span>
+                </div>
+            <?php endif; ?>
+        </div>
 
         <div class="weekly-menu-grid">
-            <?php foreach ($daysOfWeek as $day): 
+            <?php foreach ($daysOfWeek as $day):
                 $dish = $menuData['menu'][$day] ?? '';
                 $fallbackDish = $dish !== '' ? $dish : 'Por definir';
                 $isFrancesinha = stripos($fallbackDish, 'francesinha') !== false;
@@ -293,9 +431,6 @@ if ($startLabel !== '' && $endLabel !== '') {
             </div>
             <?php endforeach; ?>
         </div>
-        <?php if ($rangeText !== ''): ?>
-            <p style="text-align: center; margin-top: 40px; color: #555;">(Ementa válida de <?php echo htmlspecialchars($rangeText, ENT_QUOTES, 'UTF-8'); ?>)</p>
-        <?php endif; ?>
     </section>
 
     <footer>
